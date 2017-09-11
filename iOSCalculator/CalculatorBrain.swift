@@ -11,6 +11,10 @@ import Foundation
 struct CalculatorBrain //not in heap passed by value
 {
     
+    var resultIsPending:Bool?
+    
+    private var description = " "
+    
     private var accumulator: Double? //internal implementation, struct automatically initializes all variables
     
     private enum Operation {
@@ -59,15 +63,21 @@ struct CalculatorBrain //not in heap passed by value
                 if accumulator != nil {
                     accumulator = function(accumulator!)
                 }
+                description += symbol
             
             case .binaryOperation(let function):
+                performPendingBinaryOperation()
+                resultIsPending = false
                 if accumulator != nil {
                     pendingBinaryOperation = PendingBinaryOperation(function: function, firstOperand: accumulator!)
                     accumulator = nil
                 }
-                break
+                resultIsPending = true
+                description += symbol
             case .equals:
                 performPendingBinaryOperation()
+                resultIsPending = false
+
             }
         }
 
@@ -93,11 +103,20 @@ struct CalculatorBrain //not in heap passed by value
     
     mutating func setOperand(_ operand: Double) { //need to mark as mutating to indicate that this method can change the value of the struct
          accumulator = operand
-    }
+         description += "\(operand)"
+        }
     
     var result: Double? { //computed property, only get so read only
         get {
             return accumulator
         }
+    }
+    
+    
+  mutating func returnDescription() -> String {return description }
+    
+  mutating func resetDescription() {
+        description = " "
+        resultIsPending = nil
     }
 }

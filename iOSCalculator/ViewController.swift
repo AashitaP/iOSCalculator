@@ -12,10 +12,19 @@ class ViewController: UIViewController //inheritance
 {
 
   
-    @IBOutlet weak var display: UILabel! //optional automatically set as = nil i.e. not set //exclamation automatically unwraps it, implicitally unwrapped optional //use exclamation if no chance of it  being nil, else use if let or != nill
+    @IBOutlet weak var display: UILabel! //optional automatically set as = nil i.e. not set //exclamation automatically unwraps it, implicitally unwrapped optional //use exclamation if no chance of it  being nil, else use if let or != nil
+    
+
+    @IBOutlet weak var descriptionOfDisplay: UILabel!
     
     var userIsInMiddleOfTyping = false
-    
+ 
+    @IBAction func clear(_ sender: UIButton)
+    {
+        descriptionOfDisplay.text! = " "
+        display.text! = " "
+        brain.resetDescription()
+    }
     @IBAction func touchDigit(_ sender: UIButton) //_ means no external, there is an external and an internal 
     
     {
@@ -29,13 +38,29 @@ class ViewController: UIViewController //inheritance
             else
             {
                 display.text = textCurrentInDisplay + digit
+               //  descriptionOfDisplay.text! = display.text!
             }
   
             
         } else {
             display.text = digit
+            if descriptionOfDisplay.text! == " "
+            {
+                descriptionOfDisplay.text! += digit
+            }
             userIsInMiddleOfTyping = true
+            if let pending = brain.resultIsPending
+            {
+                if pending == true && descriptionOfDisplay.text!.contains("...")
+                {}
+                else if pending == true {
+                    descriptionOfDisplay.text! += "..."}
+                else if pending == false && descriptionOfDisplay.text!.contains("=") {}
+                else {
+                     descriptionOfDisplay.text! += "="}
+            }
         }
+        
     }
 //doesn't do anything so not in model
     
@@ -63,11 +88,14 @@ class ViewController: UIViewController //inheritance
         if let mathematicalSymbol = sender.currentTitle { //if operand is set
             
             brain.performOperation(mathematicalSymbol)
+            descriptionOfDisplay.text! = brain.returnDescription()
             if let result = brain.result { //if its not an optional, example halfway through typing and no result
                 displayValue = result
+                descriptionOfDisplay.text! += "="
                 // let operand = Double(display.text!)
                 // display.text = String(sqrt(operand!)) //assuming there is nothing that can't be converted to a double in the operand
-            }
+            } else {
+                descriptionOfDisplay.text! += "..." }
         }
     }
     
