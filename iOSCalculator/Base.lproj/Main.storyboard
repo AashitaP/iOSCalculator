@@ -227,7 +227,7 @@
                                                                                         <rect key="frame" x="382" y="0.0" width="117.5" height="48"/>
                                                                                         <color key="backgroundColor" red="0.84572121489999996" green="0.87238532619999998" blue="0.949664022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                                                        <state key="normal" title="√">
+                                                                                        <state key="normal" title="✅">
                                                                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                             <color key="titleShadowColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                                         </state>

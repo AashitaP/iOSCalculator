@@ -11,6 +11,10 @@ import Foundation
 struct CalculatorBrain //not in heap passed by value
 {
     
+    mutating func addUnaryOperation(named symbol: String, _ operation: @escaping (Double) -> Double) {
+        operations[symbol] = Operation.unaryOperation(operation)
+    }
+    
     var resultIsPending:Bool?
     
     private var description = " "

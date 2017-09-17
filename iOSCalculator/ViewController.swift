@@ -18,6 +18,15 @@ class ViewController: UIViewController //inheritance
     @IBOutlet weak var descriptionOfDisplay: UILabel!
     
     var userIsInMiddleOfTyping = false
+    
+    
+    override func viewDidLoad() { //a closure
+        super.viewDidLoad()
+        brain.addUnaryOperation(named: "✅") { [unowned self] in
+            self.display.textColor = UIColor.green
+            return sqrt($0)
+        }
+    }
  
     @IBAction func clear(_ sender: UIButton)
     {
